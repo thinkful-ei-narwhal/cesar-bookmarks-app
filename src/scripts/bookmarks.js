@@ -4,9 +4,9 @@ import store from "./store";
 const generateBookmarkControls = function() {
     let createBookmarkView= ``;
 
-    if (store.addingBookmarks) {
+    if (!store.addingBookmarks) {
         createBookmarkView = `
-        <button class="add-button"><span>ADD BOOKMARK</span></button>
+        <button class="add-button button"><span>ADD BOOKMARK</span></button>
         <select>
             <option selected disabled>Minimum Rating</option>
             <option value="1">One</option>
@@ -18,72 +18,39 @@ const generateBookmarkControls = function() {
       `;
     }else{
         createBookmarkView = `
-        <form class="js-edit-item">
-          <input class="shopping-item" type="text" value="${item.name}" />
+        <form class="createNew-form">
+            <h2>Create a Bookmark:</h2>
+            <label for="title">Name:</label>
+            <input type="text" id="title" name="title" placeholder="title">
+            <label for="url">URL:</label>
+            <input type="text" id="url" name="url" placeholder="https://example.com">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" placeholder="longer description goes here">
+            <button type= "submit" class="submit-button button">Submit</button>
         </form>
       `;
     }
-  
-    return `
-      <li class="js-item-element" data-item-id="${item.id}">
-        ${itemTitle}
-        <div class="shopping-item-controls">
-          <button class="shopping-item-toggle js-item-toggle">
-            <span class="button-label">check</span>
-          </button>
-          <button class="shopping-item-delete js-item-delete">
-            <span class="button-label">delete</span>
-          </button>
-        </div>
-      </li>`;
+    return `${createBookmarkView}`;
   };
 
-  const generateShoppingItemsString = function(shoppingList) {
-    const items = shoppingList.map(item => generateBookmarkControls(item));
-    return items.join("");
-  };
-  
   const render = function() {
-    // Filter item list if store prop is true by item.checked === false
-    let items = [...store.items];
-    if (store.hideCheckedItems) {
-      items = items.filter(item => !item.checked);
-    }
-    // render the shopping list in the DOM
-    const shoppingListItemsString = generateShoppingItemsString(items);
-    // insert that HTML into the DOM
-    $(".js-shopping-list").html(shoppingListItemsString);
-  };
-  
-  const addItemToShoppingList = function(itemName) {
-    try {
-      item.validateName(itemName);
-      store.items.push(item.create(itemName));
-    } catch (error) {
-      console.log(`Cannot add item: ${error.message}`);
-    }
+    console.log('ran render');
+
+     const bookmarkControlString = generateBookmarkControls();
+    $(".bookmarkControls").html(bookmarkControlString);
   };
 
-  const handleNewItemSubmit = function() {
-    $("#js-shopping-list-form").submit(function(event) {
-      event.preventDefault();
-      const newItemName = $(".js-shopping-list-entry").val();
-      api.createItem(newItemName)
-        .then((newItem) => {
-          store.addItem(newItem)
-          render();
-        })
+  const handleCreateBookmarkView = function() {
+    $( ".bookmarkControls" ).on( "click", ".button", function(event){
+        event.preventDefault();
+        console.log("ran add-button")
+        store.toggleAddBookmark();
+      render();
     });
   };
-  
-
 
   const bindEventListeners = function() {
-    handleNewItemSubmit();
-    handleItemCheckClicked();
-    handleDeleteItemClicked();
-    handleEditShoppingItemSubmit();
-    handleToggleFilterClick();
+    handleCreateBookmarkView();  
   };
 
   export default {

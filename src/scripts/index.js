@@ -1,11 +1,11 @@
 import $ from 'jquery';
+import bookmarks from "./bookmarks";
 import "../styles/index.css"
 
 function main() {
   console.log('DOM is loaded');
-
-  const startMsg = $('<p>Webpack is working!</p>');
-  $('#root').append(startMsg);
+  bookmarks.bindEventListeners();
+  bookmarks.render();
 }
 
 $(main);
