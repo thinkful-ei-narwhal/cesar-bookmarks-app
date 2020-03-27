@@ -1,11 +1,13 @@
 const bookmarks = [];
-const addingBookmarks = false;
+const addingBookmark = false;
 
 function toggleAddBookmark() {
-    this.addingBookmarks = !this.addingBookmarks;
+    console.log("ran toggleAddBookmark")
+    this.addingBookmark = !this.addingBookmarks;
   }
 
   export default {
+    bookmarks,
     toggleAddBookmark
   };
   
