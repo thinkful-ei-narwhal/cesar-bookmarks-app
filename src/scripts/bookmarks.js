@@ -6,7 +6,15 @@ const generateBookmarkControls = function() {
 
     if (store.addingBookmarks) {
         createBookmarkView = `
-        <button><button>
+        <button class="add-button"><span>ADD BOOKMARK</span></button>
+        <select>
+            <option selected disabled>Minimum Rating</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+            <option value="4">Four</option>
+            <option value="5">Five</option>
+        </select>
       `;
     }else{
         createBookmarkView = `
