@@ -14,7 +14,12 @@ const expand =false;
 function toggleAddBookmark() {
     this.addingBookmarks = !this.addingBookmarks;
   }
+  
+function toggleExtendBookmark() {
+    this.expand = !this.expand;
+  }
 
  export default {
-    toggleAddBookmark
+    toggleAddBookmark,
+    toggleExtendBookmark
 };

@@ -79,7 +79,6 @@ const generateBookmarkControls = function() {
   };
 
   const render = function() {
-    console.log('ran render');
     // let bookmarks = [...store.bookmarks];
     const bookmarkControlString = generateBookmarkControls();
     $(".bookmarkControls").html(bookmarkControlString);
@@ -95,14 +94,22 @@ const generateBookmarkControls = function() {
   const handleCreateBookmarkView = function() {
     $( ".bookmarkControls" ).on( "click", ".button", function(event){
         event.preventDefault();
-        console.log("ran add-button")
         store.toggleAddBookmark();
+      render();
+    });
+  };
+
+  const handleExpandingBookmark = function() {
+    $( ".bookmarkList" ).on( "click", ".expand-button", function(event){
+        event.preventDefault();
+        store.toggleExtendBookmark();
       render();
     });
   };
 
   const bindEventListeners = function() {
     handleCreateBookmarkView();  
+    handleExpandingBookmark();
   };
 
   export default {
