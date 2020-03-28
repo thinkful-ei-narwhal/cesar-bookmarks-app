@@ -19,14 +19,14 @@ const generateBookmarkControls = function() {
       `;
     }else{
         createBookmarkView = `
-        <form class="createNew-form">
+        <form class="createNew-form" name="createNew-form">
             <h2>Create a Bookmark:</h2>
             <label for="title">Name:</label>
             <input type="text" id="title" name="title" class="title" placeholder="title">
             <label for="url">URL:</label>
             <input type="text" id="url" name="url" class="url" placeholder="https://example.com">
             <label for="description">Description:</label>
-            <input type="text" id="description" name="description" placeholder="longer description goes here">
+            <input type="text" id="description" name="desc" placeholder="longer description goes here">
             <section class="rate">
             <input type="radio" id="star5" name="rate" value="5" />
             <label for="star5" title="text">5 stars</label>
@@ -113,16 +113,27 @@ const generateBookmarkControls = function() {
       event.preventDefault();
       console.log('ran submit');
       store.toggleAddBookmark();
-      const newBookmarkName = $(".title").val();
-      const newBookmarkUrl = $(".url").val();
-      api.createItem(newBookmarkName,newBookmarkUrl)
-        .then((newBookmarkName,newBookmarkUrl) => {
-          store.addItem(newBookmarkName,newBookmarkUrl)
+      let objectString=$('.createNew-form').serializeJson()
+      console.log(objectString);
+      api.createItem(objectString)
+        .then((objectString) => {
+          store.addItem(objectString)
           render();
         })
     });
   };
 
+  	
+  $.fn.extend({
+    serializeJson: function() {
+      const formData = new FormData(this[0]);
+      const o = {};
+      formData.forEach((val, name) => o[name] = val);
+      return JSON.stringify(o);
+    }
+  });
+  
+  
   const bindEventListeners = function() {
     handleCreateBookmarkView();  
     handleExpandingBookmark();

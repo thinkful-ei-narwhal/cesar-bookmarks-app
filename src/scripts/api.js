@@ -22,11 +22,9 @@ function listApiFetch(...args) {
     return listApiFetch(`${BASE_URL}/bookmarks`)
   };
   
-  function createItem(name,newBookmarkUrl) {
-    let description= "this is a description";
-    let rating= 5;
-    const newItem = JSON.stringify({ "title": name, "url": newBookmarkUrl, "desc": description, "rating":rating});
-  
+  function createItem(newItem) {
+    console.log('ran createItem');
+
     let secondArg = {
       method: 'POST', 
       headers: {'Content-Type': 'application/json'},

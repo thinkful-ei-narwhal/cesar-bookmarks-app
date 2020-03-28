@@ -27,8 +27,8 @@ function toggleExtendBookmark() {
     this.expand = !this.expand;
   }
 
-function addItem(itemName,newBookmarkUrl) {
-    this.bookmarks.push(itemName,newBookmarkUrl);
+function addItem(objectString) {
+    this.bookmarks.push(objectString);
   }
 
  export default {
