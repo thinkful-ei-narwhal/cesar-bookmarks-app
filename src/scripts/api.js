@@ -12,8 +12,8 @@ function listApiFetch(...args) {
     .then(data => {
       if (error) {
         error.message = data.message;
-        console.log('ran error')
-        console.log(error.message)
+        // console.log('ran error')
+        // console.log(error.message)
         //something is needed to add a visual of the error to the user
         return Promise.reject(error);
       }
@@ -32,7 +32,7 @@ function listApiFetch(...args) {
       headers: {'Content-Type': 'application/json'},
       body: newItem
     }
-    console.log('ran createItem')
+    // console.log('ran createItem')
     return listApiFetch(`${BASE_URL}/bookmarks`, secondArg);
   };
   

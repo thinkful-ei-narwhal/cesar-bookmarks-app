@@ -5,7 +5,7 @@ import store from "./store";
 import api from './api';
 
 function main() {
-  console.log('DOM is loaded');
+  // console.log('DOM is loaded');
 
   api.getItems()
   .then((items) => {
