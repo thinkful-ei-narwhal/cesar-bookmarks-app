@@ -10,11 +10,11 @@ const generateBookmarkControls = function() {
         <button class="add-button toogle button"><span>ADD BOOKMARK</span></button>
         <select>
             <option selected disabled>Minimum Rating</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-            <option value="4">Four</option>
-            <option value="5">Five</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
         </select>
       `;
     }else{
@@ -84,6 +84,8 @@ const generateBookmarkControls = function() {
 
   const render = function() {
     let items = [...store.bookmarks];
+    items = items.filter(item=> item.rating>=store.filter);
+
     const bookmarkControlString = generateBookmarkControls();
     $(".bookmarkControls").html(bookmarkControlString);
     const bookmarkstringString = generateBookmarksString(items);
@@ -134,6 +136,28 @@ const generateBookmarkControls = function() {
     });
   };
 
+  const handleDeleteBookmarkClicked = function() {
+    $( ".bookmarkList" ).on( "click", ".delete-button",  event => {
+      const id = getItemIdFromElement(event.currentTarget);
+      const item = store.findById(id);
+      api.deleteItem(id)
+        .then(()=>{
+          store.findAndDelete(id);
+          render();
+        })
+    });
+  };
+
+  const handleFilterSelect = function() {
+    $(".bookmarkControls").on( "change", "select",  event => {
+    let selected = "";
+    $( "select option:selected" ).each(function() {
+      selected += $( this ).text() + " ";
+    });
+    store.SelectFilter(selected);
+    render();
+    });
+  };
   	
   $.fn.extend({
     serializeJson: function() {
@@ -149,6 +173,8 @@ const generateBookmarkControls = function() {
     handleCreateBookmarkView();  
     handleExpandingBookmark();
     handleNewBookmark();
+    handleDeleteBookmarkClicked();
+    handleFilterSelect();
   };
 
   export default {
