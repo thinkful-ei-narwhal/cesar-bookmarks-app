@@ -47,12 +47,13 @@ const generateBookmarkControls = function() {
     return `${createBookmarkView}`;
   };
 
-   const createBookmarkElement = function() {
+   const createBookmarkElement = function(item) {
     let bookmark = ``;
+    console.log(item);
     if (!store.expand) {
       bookmark = `
       <li class="bookmark">
-        <button class="expand-button">Apple</button>
+        <button class="expand-button">${item.title}</button>
         <section class="rating">
           <span class="fa fa-star one"></span>
           <span class="fa fa-star two"></span>
@@ -65,8 +66,9 @@ const generateBookmarkControls = function() {
     }else{
       bookmark =`
         <li class="bookmark">
-          <button class="expand-button">Apple</button>
-          <p>jdnfjsdnfksdnfknsdkfnskdl;korjgtnglwt,gkpofkgof</p>
+          <button class="expand-button">${item.title}</button>
+          <p>${item.description}</p>
+          <button onclick="window.location.href = '${item.url}';">Visit Site</button>
           <section class="rating">
             <span class="fa fa-star one"></span>
             <span class="fa fa-star two"></span>
@@ -74,6 +76,7 @@ const generateBookmarkControls = function() {
             <span class="fa fa-star four"></span>
             <span class="fa fa-star five"></span>
           </section>
+          <button class="delete-button button"><span>Delete</span></button>
         </li>
       `
     }
@@ -81,17 +84,17 @@ const generateBookmarkControls = function() {
   };
 
   const render = function() {
-    // let items = [...store.bookmarks];
+    let items = [...store.bookmarks];
     const bookmarkControlString = generateBookmarkControls();
     $(".bookmarkControls").html(bookmarkControlString);
-    const bookmarkstringString = createBookmarkElement();
+    const bookmarkstringString = generateBookmarksString(items);
     $(".bookmarkList").html(bookmarkstringString);
   };
 
-  //   const generateBookmarksString = function(bookmarkList) {
-  //   const items = bookmarkList.map(item => createBookmarkElement(item));
-  //   return items.join("");
-  // };
+    const generateBookmarksString = function(bookmarkList) {
+    const items = bookmarkList.map(item => createBookmarkElement(item));
+    return items.join("");
+  };
 
   const handleCreateBookmarkView = function() {
     $( ".bookmarkControls" ).on( "click", ".toogle", function(event){
@@ -118,7 +121,8 @@ const generateBookmarkControls = function() {
       console.log(objectString);
       api.createItem(objectString)
         .then((objectString) => {
-          store.addItem(objectString)
+          store.addItem(objectString);
+          //$(".bookmarkControls").html(error);
           render();
         })
     });
