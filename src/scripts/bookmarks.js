@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import store from "./store";
+import api from "./api";
 
 const generateBookmarkControls = function() {
     let createBookmarkView= ``;
@@ -21,9 +22,9 @@ const generateBookmarkControls = function() {
         <form class="createNew-form">
             <h2>Create a Bookmark:</h2>
             <label for="title">Name:</label>
-            <input type="text" id="title" name="title" placeholder="title">
+            <input type="text" id="title" name="title" class="title" placeholder="title">
             <label for="url">URL:</label>
-            <input type="text" id="url" name="url" placeholder="https://example.com">
+            <input type="text" id="url" name="url" class="url" placeholder="https://example.com">
             <label for="description">Description:</label>
             <input type="text" id="description" name="description" placeholder="longer description goes here">
             <section class="rate">
@@ -79,7 +80,7 @@ const generateBookmarkControls = function() {
   };
 
   const render = function() {
-    // let bookmarks = [...store.bookmarks];
+    // let items = [...store.bookmarks];
     const bookmarkControlString = generateBookmarkControls();
     $(".bookmarkControls").html(bookmarkControlString);
     const bookmarkstringString = createBookmarkElement();
@@ -92,7 +93,7 @@ const generateBookmarkControls = function() {
   // };
 
   const handleCreateBookmarkView = function() {
-    $( ".bookmarkControls" ).on( "click", ".button", function(event){
+    $( ".bookmarkControls" ).on( "click", ".add-button", function(event){
         event.preventDefault();
         store.toggleAddBookmark();
       render();
@@ -107,9 +108,25 @@ const generateBookmarkControls = function() {
     });
   };
 
+  const handleNewBookmark = function() {
+    $(".bookmarkControls").on('submit','.createNew-form',function(event){
+      event.preventDefault();
+      console.log('ran submit');
+      store.toggleAddBookmark();
+      const newBookmarkName = $(".title").val();
+      const newBookmarkUrl = $(".url").val();
+      api.createItem(newBookmarkName,newBookmarkUrl)
+        .then((newBookmarkName,newBookmarkUrl) => {
+          store.addItem(newBookmarkName,newBookmarkUrl)
+          render();
+        })
+    });
+  };
+
   const bindEventListeners = function() {
     handleCreateBookmarkView();  
     handleExpandingBookmark();
+    handleNewBookmark();
   };
 
   export default {
