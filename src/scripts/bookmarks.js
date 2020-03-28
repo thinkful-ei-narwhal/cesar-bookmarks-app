@@ -7,7 +7,7 @@ const generateBookmarkControls = function() {
 
     if (!store.addingBookmarks) {
         createBookmarkView = `
-        <button class="add-button button"><span>ADD BOOKMARK</span></button>
+        <button class="add-button toogle button"><span>ADD BOOKMARK</span></button>
         <select>
             <option selected disabled>Minimum Rating</option>
             <option value="1">One</option>
@@ -40,6 +40,7 @@ const generateBookmarkControls = function() {
             <label for="star5" title="text">5 stars</label>
             </section>
             <button type= "submit" class="submit-button button">Submit</button>
+            <button class="cancel-button toogle button"><span>cancel</span></button>
         </form>
       `;
     }
@@ -93,7 +94,7 @@ const generateBookmarkControls = function() {
   // };
 
   const handleCreateBookmarkView = function() {
-    $( ".bookmarkControls" ).on( "click", ".add-button", function(event){
+    $( ".bookmarkControls" ).on( "click", ".toogle", function(event){
         event.preventDefault();
         store.toggleAddBookmark();
       render();
