@@ -49,18 +49,23 @@ const generateBookmarkControls = function() {
 
    const createBookmarkElement = function(item) {
     let bookmark = ``;
+
+    //star system
+    let stars= `<section class="rating">`;
+    for(let i=0;i<=item.rating;i++){
+     stars +=`<span class="fa fa-star checked"></span>`
+    }
+        for(let i=item.rating+1;i<=5;i++){
+      stars +=`<span class="fa fa-star"></span>`
+    }
+    stars +=`</section>`
+
     console.log(item);
     if (!store.expand) {
       bookmark = `
       <li class="bookmark">
         <button class="expand-button">${item.title}</button>
-        <section class="rating">
-          <span class="fa fa-star one"></span>
-          <span class="fa fa-star two"></span>
-          <span class="fa fa-star three"></span>
-          <span class="fa fa-star four"></span>
-          <span class="fa fa-star five"></span>
-        </section>
+        ${stars}
       </li>
       `;
     }else{
@@ -69,13 +74,7 @@ const generateBookmarkControls = function() {
           <button class="expand-button">${item.title}</button>
           <p>${item.description}</p>
           <button onclick="window.location.href = '${item.url}';">Visit Site</button>
-          <section class="rating">
-            <span class="fa fa-star one"></span>
-            <span class="fa fa-star two"></span>
-            <span class="fa fa-star three"></span>
-            <span class="fa fa-star four"></span>
-            <span class="fa fa-star five"></span>
-          </section>
+          ${stars}
           <button class="delete-button button"><span>Delete</span></button>
         </li>
       `
