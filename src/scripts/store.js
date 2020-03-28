@@ -1,22 +1,27 @@
 const bookmarks = [];
-const addingBookmarks = false;
-const expand =false;
+const adding = false;
 
 function toggleAddBookmark() {
-    this.addingBookmarks = !this.addingBookmarks;
+    this.adding = !this.adding;
   }
   
-function toggleExtendBookmark() {
-    this.expand = !this.expand;
+function toggleExtendBookmark(item) {
+  item.expanded = !item.expanded;
+  }
+
+function findById(id) {
+    return this.bookmarks.find(item => item.id === id);
   }
 
 function addItem(objectString) {
-    this.bookmarks.push(objectString);
+  objectString.expanded = false;
+  this.bookmarks.push(objectString);
   }
 
  export default {
     toggleAddBookmark,
     toggleExtendBookmark,
     addItem,
-    bookmarks
+    bookmarks,
+    findById
 };

@@ -5,7 +5,7 @@ import api from "./api";
 const generateBookmarkControls = function() {
     let createBookmarkView= ``;
 
-    if (!store.addingBookmarks) {
+    if (!store.adding) {
         createBookmarkView = `
         <button class="add-button toogle button"><span>ADD BOOKMARK</span></button>
         <select>
@@ -60,19 +60,19 @@ const generateBookmarkControls = function() {
     }
     stars +=`</section>`
 
-    console.log(item);
-    if (!store.expand) {
+    
+    if (!item.expanded) {
       bookmark = `
-      <li class="bookmark">
+      <li class="bookmark" data-bookmark-id="${item.id}">
         <button class="expand-button">${item.title}</button>
         ${stars}
       </li>
       `;
     }else{
       bookmark =`
-        <li class="bookmark">
+        <li class="bookmark" data-bookmark-id="${item.id}">
           <button class="expand-button">${item.title}</button>
-          <p>${item.description}</p>
+          <p>${item.desc}</p>
           <button onclick="window.location.href = '${item.url}';">Visit Site</button>
           ${stars}
           <button class="delete-button button"><span>Delete</span></button>
@@ -103,10 +103,19 @@ const generateBookmarkControls = function() {
     });
   };
 
+
+  const getItemIdFromElement = function(item) {
+    return $(item)
+      .closest(".bookmark")
+      .data("bookmark-id");
+  };
+  
   const handleExpandingBookmark = function() {
     $( ".bookmarkList" ).on( "click", ".expand-button", function(event){
-        event.preventDefault();
-        store.toggleExtendBookmark();
+      event.preventDefault();
+      const id = getItemIdFromElement(event.currentTarget);
+      const item = store.findById(id);
+      store.toggleExtendBookmark(item);
       render();
     });
   };
@@ -114,10 +123,8 @@ const generateBookmarkControls = function() {
   const handleNewBookmark = function() {
     $(".bookmarkControls").on('submit','.createNew-form',function(event){
       event.preventDefault();
-      console.log('ran submit');
       store.toggleAddBookmark();
       let objectString=$('.createNew-form').serializeJson()
-      console.log(objectString);
       api.createItem(objectString)
         .then((objectString) => {
           store.addItem(objectString);
