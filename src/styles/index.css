@@ -3,49 +3,37 @@
     font-family: 'Roboto Condensed', sans-serif;
   }
 
-p{
-    color: red;
-}
-
-form .button {
-    border: solid 2px;
-    color: black;
-    font-weight: bold;
-    padding: 15px 25px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.bookmarkControls .button, select {
-    border: solid 2px;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-    font-size: 16px;
-}
-
-.add-button, select, .submit-button{
-    background-color: rgb(2, 180, 235); 
-}
-
-.cancel-button{
-    background-color: rgb(241, 101, 77);
-}
-
-li{
-    list-style-type:none;
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 90%;
-}
-
 
 body{
-    background-color: #edf0f5; 
+    background-color: #ebecee; 
 }
 
 h1{
     text-align: center;
+}
+
+.blue{
+    background-color: rgb(2, 180, 235); 
+}
+
+.red{
+    background-color: rgb(241, 101, 77);
+}
+
+button{
+    cursor: pointer;
+}
+
+form .button {
+    padding: 15px 25px;
+}
+
+button, select {
+    border: solid 2px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
 }
 
 input, textarea{
@@ -88,11 +76,6 @@ textarea {
     resize: none;
 }
 
-.bookmark{
-    margin-top: 20px;
-    word-wrap: break-word;
-}
-
 ul {
     display: flex;
     flex-direction:column;
@@ -100,16 +83,41 @@ ul {
     padding: 10px;
 }
 
+/* add flex */
+.bookmark{
+    word-wrap: break-word;
+    list-style-type:none;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 90%;
+}
+
 .expand-button {
-    background-color: #4CAF50; /* Green background */
-    border: none; /* Green border */
+    background-color: #4CAF50;
+    border: none;
     border-radius: 10px 10px 0px 0px;
-    color: white; /* White text */
-    padding: 10px 24px; /* Some padding */
+    padding: 10px 24px; 
     margin: 0;
-    cursor: pointer; /* Pointer/hand icon */
-    width: 100%; /* Set a width if needed */
+    width: 100%; 
+    font-size: 16px;
+    font-weight: bold;
     text-align: left;
+}
+
+/* .delete-button{
+    position: absolute;
+} */
+
+
+
+.star-rating, li button{
+    margin-left: 24px;
+}
+
+li p{
+    padding: 15px;
+    margin: 0;
 }
 
 .rating{
@@ -121,7 +129,3 @@ ul {
 }
 
 /* viewport change after 400px */
-
-
-
- 

@@ -8,8 +8,8 @@ const generateBookmarkControls = function() {
     if (!store.adding) {
         createBookmarkView = `
         <section class= "button-controls">
-        <button class="add-button toogle button">ADD BOOKMARK</button>
-        <select>
+        <button class="add-button toogle button blue">ADD BOOKMARK</button>
+        <select class="blue">
             <option selected disabled>Minimum Rating</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -48,8 +48,8 @@ const generateBookmarkControls = function() {
             <label for="star5" title="text">5</label>
             </fieldset>
             <section class= "button-controls">
-            <button type= "submit" class="submit-button button">Submit</button>
-            <button class="cancel-button toogle button">Cancel</button>
+            <button type= "submit" class="submit-button button blue">Submit</button>
+            <button class="cancel-button toogle button red">Cancel</button>
             </section>
         </form>
       `;
@@ -83,9 +83,9 @@ const generateBookmarkControls = function() {
         <li class="bookmark" data-bookmark-id="${item.id}">
           <button class="expand-button">${item.title}</button>
           <p>${item.desc}</p>
-          <button onclick="window.location.href = '${item.url}';">Visit Site</button>
+          <button class="url-button button blue" onclick="window.location.href = '${item.url}';">Visit Site</button>
           ${stars}
-          <button class="delete-button button"><span>Delete</span></button>
+          <button class="delete-button button red"><span>Delete</span></button>
         </li>
       `
     }
