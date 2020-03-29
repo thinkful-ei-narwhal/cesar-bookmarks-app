@@ -5,8 +5,6 @@ import store from "./store";
 import api from './api';
 
 function main() {
-  // console.log('DOM is loaded');
-
   api.getItems()
   .then((items) => {
     items.forEach((item) => store.addItem(item));

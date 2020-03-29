@@ -2,6 +2,7 @@ const bookmarks = [];
 const filter= 0;
 const adding = false;
 const error= null;
+
 function toggleAddBookmark() {
     this.adding = !this.adding;
   }
@@ -26,7 +27,6 @@ function addItem(objectString) {
 function SelectFilter(rating) {
   this.filter=rating;
   }
-
 
  export default {
     toggleAddBookmark,

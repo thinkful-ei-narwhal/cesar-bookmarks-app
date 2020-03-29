@@ -1,25 +1,109 @@
 * {
     box-sizing: border-box;
+    font-family: 'Roboto Condensed', sans-serif;
   }
 
 p{
     color: red;
 }
 
-li{
-    list-style-type:none;
+form .button {
+    border: solid 2px;
+    color: black;
+    font-weight: bold;
+    padding: 15px 25px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.bookmarkControls .button, select {
+    border: solid 2px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+}
+
+.add-button, select, .submit-button{
+    background-color: rgb(2, 180, 235); 
+}
+
+.cancel-button{
+    background-color: rgb(241, 101, 77);
 }
 
 li{
     list-style-type:none;
     border: 1px solid black;
-    padding: 0px;
+    border-radius: 10px;
     width: 90%;
+}
+
+
+body{
+    background-color: #edf0f5; 
+}
+
+h1{
+    text-align: center;
+}
+
+input, textarea{
+    margin-bottom:10px;
+}
+
+.bookmarkControls{
+    border: 3px solid black;
+    padding: 10px 24px; /* Some padding */
+    background-color: #4CAF50;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    align-content: center;
+}
+
+.button-controls{
+    display: flex;
+    justify-content:space-around;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+button, select{
+    margin: 5px;
+    padding: 5px;
+}
+
+.title, .url, #description, fieldset{
+    width: 100%;
+}
+
+fieldset{
+    border:2px solid white;
+    display: flex;
+    justify-content: space-around;
+}
+
+textarea {
+    resize: none;
+}
+
+.bookmark{
+    margin-top: 20px;
+    word-wrap: break-word;
+}
+
+ul {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    padding: 10px;
 }
 
 .expand-button {
     background-color: #4CAF50; /* Green background */
     border: none; /* Green border */
+    border-radius: 10px 10px 0px 0px;
     color: white; /* White text */
     padding: 10px 24px; /* Some padding */
     margin: 0;
@@ -36,6 +120,7 @@ li{
     color: orange;
 }
 
+/* viewport change after 400px */
 
 
 

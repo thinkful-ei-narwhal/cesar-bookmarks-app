@@ -7,7 +7,8 @@ const generateBookmarkControls = function() {
 
     if (!store.adding) {
         createBookmarkView = `
-        <button class="add-button toogle button"><span>ADD BOOKMARK</span></button>
+        <section class= "button-controls">
+        <button class="add-button toogle button">ADD BOOKMARK</button>
         <select>
             <option selected disabled>Minimum Rating</option>
             <option value="1">1</option>
@@ -16,31 +17,40 @@ const generateBookmarkControls = function() {
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
+        </section>
       `;
     }else{
         createBookmarkView = `
         <form class="createNew-form" name="createNew-form">
             <h2>Create a Bookmark:</h2>
             <label for="title">Name:</label>
+            <br>
             <input type="text" id="title" name="title" class="title" placeholder="title">
+            <br>
             <label for="url">URL:</label>
+            <br>
             <input type="text" id="url" name="url" class="url" placeholder="https://example.com">
+            <br>
             <label for="description">Description:</label>
-            <input type="text" id="description" name="desc" placeholder="longer description goes here">
-            <section class="rate">
+            <br>
+            <textarea name="desc" rows="8" cols="30" id="description" name="desc" placeholder="longer description goes here"></textarea>
+            <fieldset class="rate">
+            <legend>Rating:</legend>
             <input type="radio" id="star1" name="rating" class="rating" value="1" />
-            <label for="star1" title="text">1 star</label>
+            <label for="star1" title="text">1</label>
             <input type="radio" id="star2" name="rating" class="rating" value="2" />
-            <label for="star2" title="text">2 stars</label>
+            <label for="star2" title="text">2</label>
             <input type="radio" id="star3" name="rating" class="rating" value="3" />
-            <label for="star3" title="text">3 stars</label>
+            <label for="star3" title="text">3</label>
             <input type="radio" id="star4" name="rating" class="rating" value="4" />
-            <label for="star4" title="text">4 stars</label>
+            <label for="star4" title="text">4</label>
             <input type="radio" id="star5" name="rating" class="rating" value="5" />
-            <label for="star5" title="text">5 stars</label>
-            </section>
+            <label for="star5" title="text">5</label>
+            </fieldset>
+            <section class= "button-controls">
             <button type= "submit" class="submit-button button">Submit</button>
-            <button class="cancel-button toogle button"><span>cancel</span></button>
+            <button class="cancel-button toogle button">Cancel</button>
+            </section>
         </form>
       `;
     }
@@ -127,6 +137,7 @@ const generateBookmarkControls = function() {
       event.preventDefault();
       store.toggleAddBookmark();
       let objectString=$('.createNew-form').serializeJson()
+      console.log(objectString);
       api.createItem(objectString)
         .then((objectString) => {
           store.addItem(objectString);
@@ -167,7 +178,6 @@ const generateBookmarkControls = function() {
       return JSON.stringify(o);
     }
   });
-  
   
   const bindEventListeners = function() {
     handleCreateBookmarkView();  
