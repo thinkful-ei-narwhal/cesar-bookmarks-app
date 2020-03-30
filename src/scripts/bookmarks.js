@@ -1,12 +1,12 @@
 import $ from 'jquery';
-import store from "./store";
-import api from "./api";
+import store from './store';
+import api from './api';
 
 const generateBookmarkControls = function() {
-    let createBookmarkView= ``;
+  let createBookmarkView= '';
 
-    if (!store.adding) {
-        createBookmarkView = `
+  if (!store.adding) {
+    createBookmarkView = `
         <section class= "button-controls">
         <button class="add-button toogle button blue">ADD BOOKMARK</button>
         <select class="blue">
@@ -19,8 +19,8 @@ const generateBookmarkControls = function() {
         </select>
         </section>
       `;
-    }else{
-        createBookmarkView = `
+  }else{
+    createBookmarkView = `
         <form class="createNew-form" name="createNew-form">
             <h2>Create a Bookmark:</h2>
             <section class="inputs">
@@ -52,33 +52,33 @@ const generateBookmarkControls = function() {
             </section>
         </form>
       `;
-    }
-    return `${createBookmarkView}`;
-  };
+  }
+  return `${createBookmarkView}`;
+};
 
-   const createBookmarkElement = function(item) {
-    let bookmark = ``;
+const createBookmarkElement = function(item) {
+  let bookmark = '';
 
-    //star system
-    let stars= `<section class="star-rating">`;
-    for(let i=0;i<item.rating;i++){
-     stars +=`<span class="fa fa-star checked"></span>`
-    }
-        for(let i=item.rating+1;i<=5;i++){
-      stars +=`<span class="fa fa-star"></span>`
-    }
-    stars +=`</section>`
+  //star system
+  let stars= '<section class="star-rating">';
+  for(let i=0;i<item.rating;i++){
+    stars +='<span class="fa fa-star checked"></span>';
+  }
+  for(let i=item.rating+1;i<=5;i++){
+    stars +='<span class="fa fa-star"></span>';
+  }
+  stars +='</section>';
 
     
-    if (!item.expanded) {
-      bookmark = `
+  if (!item.expanded) {
+    bookmark = `
       <li class="bookmark" data-bookmark-id="${item.id}">
         <button class="expand-button">${item.title}</button>
         ${stars}
       </li>
       `;
-    }else{
-      bookmark =`
+  }else{
+    bookmark =`
         <li class="bookmark" data-bookmark-id="${item.id}">
           <button class="expand-button">${item.title}</button>
           <section class="expand">
@@ -90,107 +90,110 @@ const generateBookmarkControls = function() {
           <section>
           </section>
         </li>
-      `
-    }
-    return bookmark
-  };
+      `;
+  }
+  return bookmark;
+};
 
-  const render = function() {
-    let items = [...store.bookmarks];
-    items = items.filter(item=> item.rating>=store.filter);
+const render = function() {
+  let items = [...store.bookmarks];
+  items = items.filter(item=> item.rating>=store.filter);
 
-    const bookmarkControlString = generateBookmarkControls();
-    $(".bookmarkControls").html(bookmarkControlString);
-    const bookmarkstringString = generateBookmarksString(items);
-    $(".bookmarkList").html(bookmarkstringString);
-  };
+  const bookmarkControlString = generateBookmarkControls();
+  $('.bookmarkControls').html(bookmarkControlString);
+  const bookmarkstringString = generateBookmarksString(items);
+  $('.bookmarkList').html(bookmarkstringString);
+};
 
-    const generateBookmarksString = function(bookmarkList) {
-    const items = bookmarkList.map(item => createBookmarkElement(item));
-    return items.join("");
-  };
+const generateBookmarksString = function(bookmarkList) {
+  const items = bookmarkList.map(item => createBookmarkElement(item));
+  return items.join('');
+};
 
-  const handleCreateBookmarkView = function() {
-    $( ".bookmarkControls" ).on( "click", ".toogle", function(event){
-        event.preventDefault();
-        store.toggleAddBookmark();
-      render();
-    });
-  };
+const handleCreateBookmarkView = function() {
+  $( '.bookmarkControls' ).on( 'click', '.toogle', function(event){
+    event.preventDefault();
+    store.toggleAddBookmark();
+    render();
+  });
+};
 
 
-  const getItemIdFromElement = function(item) {
-    return $(item)
-      .closest(".bookmark")
-      .data("bookmark-id");
-  };
+const getItemIdFromElement = function(item) {
+  return $(item)
+    .closest('.bookmark')
+    .data('bookmark-id');
+};
   
-  const handleExpandingBookmark = function() {
-    $( ".bookmarkList" ).on( "click", ".expand-button", function(event){
-      event.preventDefault();
-      const id = getItemIdFromElement(event.currentTarget);
-      const item = store.findById(id);
-      store.toggleExtendBookmark(item);
-      render();
-    });
-  };
+const handleExpandingBookmark = function() {
+  $( '.bookmarkList' ).on( 'click', '.expand-button', function(event){
+    event.preventDefault();
+    const id = getItemIdFromElement(event.currentTarget);
+    const item = store.findById(id);
+    store.toggleExtendBookmark(item);
+    render();
+  });
+};
 
-  const handleNewBookmark = function() {
-    $(".bookmarkControls").on('submit','.createNew-form',function(event){
-      event.preventDefault();
-      store.toggleAddBookmark();
-      let objectString=$('.createNew-form').serializeJson()
-      console.log(objectString);
-      api.createItem(objectString)
-        .then((objectString) => {
-          store.addItem(objectString);
-          //$(".bookmarkControls").html(error);
-          render();
-        })
-    });
-  };
+const handleNewBookmark = function() {
+  $('.bookmarkControls').on('submit','.createNew-form',function(event){
+    event.preventDefault();
+    store.toggleAddBookmark();
+    let objectString=$('.createNew-form').serializeJson();
+    // console.log(objectString);
+    api.createItem(objectString)
+      .then((objectString) => {
+        store.addItem(objectString);
+        render();
+      })
+      .catch(error =>{
+        console.log(error);
+      });
+  });
+};
 
-  const handleDeleteBookmarkClicked = function() {
-    $( ".bookmarkList" ).on( "click", ".delete-button",  event => {
-      const id = getItemIdFromElement(event.currentTarget);
-      const item = store.findById(id);
-      api.deleteItem(id)
-        .then(()=>{
-          store.findAndDelete(id);
-          render();
-        })
-    });
-  };
+const handleDeleteBookmarkClicked = function() {
+  $( '.bookmarkList' ).on( 'click', '.delete-button',  event => {
+    const id = getItemIdFromElement(event.currentTarget);
+    // const item = store.findById(id);
+    api.deleteItem(id)
+      .then(()=>{
+        store.findAndDelete(id);
+        render();
+      });
+  });
+};
 
-  const handleFilterSelect = function() {
-    $(".bookmarkControls").on( "change", "select",  event => {
-    let selected = "";
-    $( "select option:selected" ).each(function() {
-      selected += $( this ).text() + " ";
+const handleFilterSelect = function() {
+  $('.bookmarkControls').on( 'change', 'select',  event => {
+    event.preventDefault();
+    let selected = '';
+    $( 'select option:selected' ).each(function() {
+      selected += $( this ).text() + ' ';
     });
     store.SelectFilter(selected);
     render();
-    });
-  };
-  	
-  $.fn.extend({
-    serializeJson: function() {
-      const formData = new FormData(this[0]);
-      const o = {};
-      formData.forEach((val, name) => o[name] = val);
-      return JSON.stringify(o);
-    }
   });
+};
+  	
+$.fn.extend({
+  serializeJson: function() {
+    const formData = new FormData(this[0]);
+    const o = {};
+    formData.forEach((val, name) => o[name] = val);
+    return JSON.stringify(o);
+  }
+});
   
-  const bindEventListeners = function() {
-    handleCreateBookmarkView();  
-    handleExpandingBookmark();
-    handleNewBookmark();
-    handleDeleteBookmarkClicked();
-    handleFilterSelect();
-  };
+const bindEventListeners = function() {
+  handleCreateBookmarkView();  
+  handleExpandingBookmark();
+  handleNewBookmark();
+  handleDeleteBookmarkClicked();
+  handleFilterSelect();
+};
 
-  export default {
-    render,
-    bindEventListeners
-  };
+export default {
+  render,
+  bindEventListeners
+};

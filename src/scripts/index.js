@@ -1,15 +1,15 @@
 import $ from 'jquery';
-import bookmarks from "./bookmarks";
-import "../styles/index.css"
-import store from "./store";
+import bookmarks from './bookmarks';
+import '../styles/index.css';
+import store from './store';
 import api from './api';
 
 function main() {
   api.getItems()
-  .then((items) => {
-    items.forEach((item) => store.addItem(item));
-    bookmarks.render();
-  });
+    .then((items) => {
+      items.forEach((item) => store.addItem(item));
+      bookmarks.render();
+    });
   bookmarks.bindEventListeners();
   bookmarks.render();
 }
