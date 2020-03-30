@@ -82,10 +82,14 @@ const generateBookmarkControls = function() {
       bookmark =`
         <li class="bookmark" data-bookmark-id="${item.id}">
           <button class="expand-button">${item.title}</button>
+          <section class="expand">
           <p>${item.desc}</p>
           <button class="url-button button blue" onclick="window.location.href = '${item.url}';">Visit Site</button>
+          <section class= "bottom-expand">
           ${stars}
           <button class="delete-button button red"><span>Delete</span></button>
+          <section>
+          </section>
         </li>
       `
     }
