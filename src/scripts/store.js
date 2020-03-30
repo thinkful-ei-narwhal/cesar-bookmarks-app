@@ -28,13 +28,18 @@ function SelectFilter(rating) {
   this.filter=rating;
 }
 
+function displayError(error) {
+  this.error=error;
+}
+
 export default {
   toggleAddBookmark,
   findAndDelete,
   SelectFilter,
+  displayError,
   toggleExtendBookmark,
   addItem,
-  bookmarks,
   findById,
+  bookmarks,
   filter
 };

@@ -21,6 +21,7 @@ const generateBookmarkControls = function() {
       `;
   }else{
     createBookmarkView = `
+        ${(store.error)?`<span class="error">${store.error}</span>`:''}
         <form class="createNew-form" name="createNew-form">
             <h2>Create a Bookmark:</h2>
             <section class="inputs">
@@ -140,14 +141,16 @@ const handleNewBookmark = function() {
     event.preventDefault();
     store.toggleAddBookmark();
     let objectString=$('.createNew-form').serializeJson();
-    // console.log(objectString);
     api.createItem(objectString)
       .then((objectString) => {
+        store.displayError();
         store.addItem(objectString);
         render();
       })
       .catch(error =>{
-        console.log(error);
+        store.displayError(error.message);
+        store.toggleAddBookmark();
+        render();
       });
   });
 };

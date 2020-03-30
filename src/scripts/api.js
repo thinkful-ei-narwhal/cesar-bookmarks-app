@@ -1,8 +1,8 @@
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/cesarlenin';
 
 function listApiFetch(...args) {
-    let error = false;
-    return fetch(...args)
+  let error = false;
+  return fetch(...args)
     .then(res => {
       if (!res.ok) {
         error = { code: res.status };
@@ -12,54 +12,50 @@ function listApiFetch(...args) {
     .then(data => {
       if (error) {
         error.message = data.message;
-        // console.log('ran error')
-        // console.log(error.message)
-        //something is needed to add a visual of the error to the user
         return Promise.reject(error);
       }
       return data;
-    })
-  }
+    });
+}
   
-  function getItems() {
-    return listApiFetch(`${BASE_URL}/bookmarks`)
-  };
+function getItems() {
+  return listApiFetch(`${BASE_URL}/bookmarks`);
+}
   
-  function createItem(newItem) {
+function createItem(newItem) {
 
-    let secondArg = {
-      method: 'POST', 
-      headers: {'Content-Type': 'application/json'},
-      body: newItem
-    }
-    // console.log('ran createItem')
-    return listApiFetch(`${BASE_URL}/bookmarks`, secondArg);
+  let secondArg = {
+    method: 'POST', 
+    headers: {'Content-Type': 'application/json'},
+    body: newItem
+  };
+  return listApiFetch(`${BASE_URL}/bookmarks`, secondArg);
+}
+  
+function updateItem(id, updateData) {
+  const newData = JSON.stringify(updateData);
+  
+  let secondArg = {
+    method: 'PATCH', 
+    headers: {'Content-Type': 'application/json'},
+    body: newData
   };
   
-  function updateItem(id, updateData) {
-    const newData = JSON.stringify(updateData);
+  return listApiFetch(`${BASE_URL}/bookmarks/${id}`, secondArg);
+}
   
-    let secondArg = {
-      method: 'PATCH', 
-      headers: {'Content-Type': 'application/json'},
-      body: newData
-    }
-  
-    return listApiFetch(`${BASE_URL}/bookmarks/${id}`, secondArg);
-  }
-  
-  function deleteItem(id) {
-    let secondArg = {
-      method: 'DELETE', 
-      headers: {'Content-Type': 'application/json'},
-    }
+function deleteItem(id) {
+  let secondArg = {
+    method: 'DELETE', 
+    headers: {'Content-Type': 'application/json'},
+  };
 
-    return listApiFetch(`${BASE_URL}/bookmarks/${id}`, secondArg);
-  }
+  return listApiFetch(`${BASE_URL}/bookmarks/${id}`, secondArg);
+}
   
-  export default {
-    getItems,
-    createItem,
-    updateItem,
-    deleteItem
-  };
+export default {
+  getItems,
+  createItem,
+  updateItem,
+  deleteItem
+};
