@@ -23,16 +23,14 @@ const generateBookmarkControls = function() {
         createBookmarkView = `
         <form class="createNew-form" name="createNew-form">
             <h2>Create a Bookmark:</h2>
+            <section class="inputs">
             <label for="title">Name:</label>
-            <br>
             <input type="text" id="title" name="title" class="title" placeholder="title">
-            <br>
             <label for="url">URL:</label>
-            <br>
             <input type="text" id="url" name="url" class="url" placeholder="https://example.com">
-            <br>
+            </section>
             <label for="description">Description:</label>
-            <br>
+            <section class="details">
             <textarea name="desc" rows="8" cols="30" id="description" name="desc" placeholder="longer description goes here"></textarea>
             <fieldset class="rate">
             <legend>Rating:</legend>
@@ -47,6 +45,7 @@ const generateBookmarkControls = function() {
             <input type="radio" id="star5" name="rating" class="rating" value="5" />
             <label for="star5" title="text">5</label>
             </fieldset>
+            </section>
             <section class= "button-controls">
             <button type= "submit" class="submit-button button blue">Submit</button>
             <button class="cancel-button toogle button red">Cancel</button>
