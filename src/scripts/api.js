@@ -1,5 +1,6 @@
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/cesarlenin';
 
+//function handles fetch and errors
 function listApiFetch(...args) {
   let error = false;
   return fetch(...args)
@@ -18,11 +19,11 @@ function listApiFetch(...args) {
     });
 }
   
-function getItems() {
+function getItems() {//get
   return listApiFetch(`${BASE_URL}/bookmarks`);
 }
   
-function createItem(newItem) {
+function createItem(newItem) {//post
 
   let secondArg = {
     method: 'POST', 
@@ -32,7 +33,7 @@ function createItem(newItem) {
   return listApiFetch(`${BASE_URL}/bookmarks`, secondArg);
 }
   
-function updateItem(id, updateData) {
+function updateItem(id, updateData) {//patch
   const newData = JSON.stringify(updateData);
   
   let secondArg = {
@@ -44,7 +45,7 @@ function updateItem(id, updateData) {
   return listApiFetch(`${BASE_URL}/bookmarks/${id}`, secondArg);
 }
   
-function deleteItem(id) {
+function deleteItem(id) {//delete
   let secondArg = {
     method: 'DELETE', 
     headers: {'Content-Type': 'application/json'},

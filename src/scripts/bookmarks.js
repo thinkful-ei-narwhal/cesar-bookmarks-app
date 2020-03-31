@@ -2,6 +2,9 @@ import $ from 'jquery';
 import store from './store';
 import api from './api';
 
+/** ******** TEMPLATE GENERATION FUNCTIONS **********/
+// These functions return HTML templates
+
 const generateBookmarkControls = function() {
   let createBookmarkView= '';
 
@@ -60,7 +63,7 @@ const generateBookmarkControls = function() {
 const createBookmarkElement = function(item) {
   let bookmark = '';
 
-  //star system
+  //star rating system
   let stars= '<section class="star-rating">';
   for(let i=0;i<item.rating;i++){
     stars +='<span class="fa fa-star checked"></span>';
@@ -96,6 +99,8 @@ const createBookmarkElement = function(item) {
   return bookmark;
 };
 
+/** ******** RENDER FUNCTION(S) **********/
+// This function conditionally replaces the contents of the <section> and <ul> tag based on the state of the store
 const render = function() {
   let items = [...store.bookmarks];
   items = items.filter(item=> item.rating>=store.filter);
@@ -111,6 +116,28 @@ const generateBookmarksString = function(bookmarkList) {
   return items.join('');
 };
 
+/** ******** DATA RETRIEVAL FUNCTIONS **********/
+// These functions retrive the id of a bookmark or the inputs from a form
+
+const getItemIdFromElement = function(item) {
+  return $(item)
+    .closest('.bookmark')
+    .data('bookmark-id');
+};
+
+//jquery extend for data on form 
+$.fn.extend({
+  serializeJson: function() {
+    const formData = new FormData(this[0]);
+    const o = {};
+    formData.forEach((val, name) => o[name] = val);
+    return JSON.stringify(o);
+  }
+});
+
+/** ******** EVENT HANDLER FUNCTIONS **********/
+// These functions handle events (submit, click, change)
+
 const handleCreateBookmarkView = function() {
   $( '.bookmarkControls' ).on( 'click', '.toogle', function(event){
     event.preventDefault();
@@ -119,13 +146,6 @@ const handleCreateBookmarkView = function() {
   });
 };
 
-
-const getItemIdFromElement = function(item) {
-  return $(item)
-    .closest('.bookmark')
-    .data('bookmark-id');
-};
-  
 const handleExpandingBookmark = function() {
   $( '.bookmarkList' ).on( 'click', '.expand-button', function(event){
     event.preventDefault();
@@ -158,7 +178,6 @@ const handleNewBookmark = function() {
 const handleDeleteBookmarkClicked = function() {
   $( '.bookmarkList' ).on( 'click', '.delete-button',  event => {
     const id = getItemIdFromElement(event.currentTarget);
-    // const item = store.findById(id);
     api.deleteItem(id)
       .then(()=>{
         store.findAndDelete(id);
@@ -178,15 +197,6 @@ const handleFilterSelect = function() {
     render();
   });
 };
-  	
-$.fn.extend({
-  serializeJson: function() {
-    const formData = new FormData(this[0]);
-    const o = {};
-    formData.forEach((val, name) => o[name] = val);
-    return JSON.stringify(o);
-  }
-});
   
 const bindEventListeners = function() {
   handleCreateBookmarkView();  
