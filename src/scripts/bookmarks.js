@@ -5,7 +5,7 @@ import api from './api';
 /** ******** TEMPLATE GENERATION FUNCTIONS **********/
 // These functions return HTML templates
 
-const generateBookmarkControls = function() {
+const generateBookmarkControls = function() {//controls view
   let createBookmarkView= '';
 
   if (!store.adding) {
@@ -60,7 +60,7 @@ const generateBookmarkControls = function() {
   return `${createBookmarkView}`;
 };
 
-const createBookmarkElement = function(item) {
+const createBookmarkElement = function(item) {//bookmarks view
   let bookmark = '';
 
   //star rating system
@@ -101,6 +101,7 @@ const createBookmarkElement = function(item) {
 
 /** ******** RENDER FUNCTION(S) **********/
 // This function conditionally replaces the contents of the <section> and <ul> tag based on the state of the store
+
 const render = function() {
   let items = [...store.bookmarks];
   items = items.filter(item=> item.rating>=store.filter);
@@ -138,7 +139,7 @@ $.fn.extend({
 /** ******** EVENT HANDLER FUNCTIONS **********/
 // These functions handle events (submit, click, change)
 
-const handleCreateBookmarkView = function() {
+const handleBookmarkView = function() {
   $( '.bookmarkControls' ).on( 'click', '.toogle', function(event){
     event.preventDefault();
     store.toggleAddBookmark();
@@ -156,7 +157,7 @@ const handleExpandingBookmark = function() {
   });
 };
 
-const handleNewBookmark = function() {
+const handleCreateNewBookmark = function() {
   $('.bookmarkControls').on('submit','.createNew-form',function(event){
     event.preventDefault();
     store.toggleAddBookmark();
@@ -175,7 +176,7 @@ const handleNewBookmark = function() {
   });
 };
 
-const handleDeleteBookmarkClicked = function() {
+const handleDeleteBookmark = function() {
   $( '.bookmarkList' ).on( 'click', '.delete-button',  event => {
     const id = getItemIdFromElement(event.currentTarget);
     api.deleteItem(id)
@@ -199,10 +200,10 @@ const handleFilterSelect = function() {
 };
   
 const bindEventListeners = function() {
-  handleCreateBookmarkView();  
+  handleBookmarkView();  
   handleExpandingBookmark();
-  handleNewBookmark();
-  handleDeleteBookmarkClicked();
+  handleCreateNewBookmark();
+  handleDeleteBookmark();
   handleFilterSelect();
 };
 
